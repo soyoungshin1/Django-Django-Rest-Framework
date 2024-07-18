@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api.apps.ApiConfig',
+    'myapp.apps.MyappConfig',
     'rest_framework',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'rest_framework_docs',
 ]
 
 MIDDLEWARE = [
@@ -146,4 +148,10 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+       'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10, 
+    # Browsable API 활성화하려면 주석해제
+        #'DEFAULT_RENDERER_CLASSES': [
+        #'rest_framework.renderers.BrowsableAPIRenderer',
+    #],
 }

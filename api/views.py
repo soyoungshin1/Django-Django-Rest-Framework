@@ -1,14 +1,16 @@
 from .serializers import BookSerializer
 from rest_framework.decorators import *
-from rest_framework import response
+from rest_framework import response,generics
 from rest_framework.response import Response
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 from rest_framework.viewsets import ViewSet
+from rest_framework.filters import SearchFilter, OrderingFilter
 from .models import Book
-from rest_framework import generics
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UserSerializer
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import PageNumberPagination
+
 
 
 
@@ -25,18 +27,24 @@ class BookViewSet(viewsets.ViewSet):
     def list(self, request):
         queryset = Book.objects.all()
         serializer = BookSerializer(queryset, many=True)
+        pagination_class = PageNumberPagination
+        filter_backends = [SearchFilter,OrderingFilter]
+        search_fields = ['title', 'author']
+        ordering_fields = ['publication_date', 'price']
         return Response(serializer.data)
     
     
     def retrieve(self, request, pk=None):
         book = Book.objects.get(pk=pk)
         serializer =BookSerializer(book)
+        pagination_class = PageNumberPagination
         return Response(serializer.data)
     
     
     
     def mark_as_read(self,request,pk=None):
             book = Book.objects.get(pk=pk)
+            pagination_class = PageNumberPagination
             book.mark_as_read()
             return Response({'status' : 'book marked as read'})
         
@@ -81,7 +89,7 @@ class UserLoginView(generics.GenericAPIView):
     serializer_class = UserSerializer
     def post(self, request, *args, **kwargs)   :
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception+True)
+        serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
         
         refresh = RefreshToken.for_user(user)
