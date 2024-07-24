@@ -1,10 +1,13 @@
 # Django RestFramework 
 
-1. 가상환경 설치, 활성화
-```python3 -m virtualenv venv```
+1. 가상환경 설치, 활성화 <br>
+
+```python3 -m virtualenv venv```<br>
+
 ```source ./venv/bin/activate```
 
-2. DRF 설치 
+2. DRF 설치 <br>
+
 ```pip install djangorestframework```
 
 
