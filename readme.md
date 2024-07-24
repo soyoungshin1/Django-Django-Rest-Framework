@@ -16,6 +16,8 @@ INSTALLED_APPS = [
     ...
 ]
 ```
+<br>
+
 ---
 ##### RESTful API 구현 연습 예시
 <img src="./img/1.png" width="450px" height="300px" ></img><br/>
